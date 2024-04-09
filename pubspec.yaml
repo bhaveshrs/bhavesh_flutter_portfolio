@@ -40,6 +40,7 @@ dependencies:
   flutter_svg: ^2.0.9
   url_launcher: ^6.1.14
   flip_card: ^0.7.0
+  flutter_native_splash: ^2.3.7
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/evi/
+    - assets/fifth_ventricle/
+    - assets/pos_sorted/
+    - assets/trust_block/
+    - assets/whatthub/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -93,3 +99,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_native_splash:
+  image: assets\flutter_dash.png
+  color: "#000000"
+
+  android: false
+  ios: false

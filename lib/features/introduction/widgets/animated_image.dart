@@ -56,15 +56,20 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>  with S
               duration: const Duration(seconds: 1),
               builder: (context, value, child) {
                 return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+
                   children: [
-                    Column(
-                      children: [
-                        Image.asset(
-                          widget.skillItems.image,
-                          height: ((widget.height ?? 100) / 4),
-                          width: ((widget.width ?? 100) / 3),
-                          fit: BoxFit.cover,
-                        ),
+                       Expanded(
+                         child: Padding(
+                           padding: const EdgeInsets.all(10.0),
+                           child: Image.asset(
+                              widget.skillItems.image,
+                              // height: ((widget.height ?? 100) / 3),
+                              // width: ((widget.width ?? 100) / 3),
+                              fit: BoxFit.contain,
+                            ),
+                         ),
+                       ),
                         const SizedBox(
                           width: 8,
                         ),
@@ -79,17 +84,15 @@ class _AnimatedImageContainerState extends State<AnimatedImageContainer>  with S
                           ),
                           desktop: Text(
                             widget.skillItems.title,
-                            style: const TextStyle(color: Colors.white),
-                          ),
+                            style: const TextStyle(color: Colors.white,fontSize: 30),
+                          ),  
+
                           tablet: Text(
                             widget.skillItems.title,
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
-                        // const Spacer(),
-                        Text('${(value * 100).toInt().toString()}%'),
-                      ],
-                    ),
+                     Text('${(value * 100).toInt().toString()}%'),
                     const SizedBox(
                       height: 10,
                     ),

@@ -28,21 +28,25 @@ class _MobileAppBarState extends State<MobileAppBar> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+              Image.asset("assets/flutter_logo.png",height: 70,width: 70,),
+                        
             InkWell(
               onTap: () => widget.appBarClick(_toggle, 0),
-              child: const Text(
-                'Bhavesh',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
-                  color: AppColors.darkPopupTextColor,
-                ),
-              ),
+              child:  const Text(
+                            'Bhavesh',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
+                          ),
             ),
+            Spacer(),
             InkWell(
               onTap: () {
                 setState(() {

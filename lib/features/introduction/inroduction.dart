@@ -209,7 +209,7 @@ class _IntroductionState extends State<Introduction>
                           height: 20,
                           color: Colors.transparent,
                         ),
-                      const CombineSubtitleText(),
+                      const CombineSubtitleText(firstText: "Flutter " ,secondText: "Developer"),
                       const SizedBox(height: 10),
                       const Responsive(
                         desktop: AnimatedDescriptionText(start: 14, end: 15),

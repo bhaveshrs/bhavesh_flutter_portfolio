@@ -29,6 +29,6 @@ class MyApp extends StatelessWidget {
                 bodyMedium: const TextStyle(color: AppColors.iconTextColor),
               ),
         ),
-        home: const HomePage());
+        home: const SplashView());
   }
 }
