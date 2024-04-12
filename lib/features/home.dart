@@ -97,8 +97,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("_scrollOffset--->>>$_scrollOffset");
-    print("height--->>>${MediaQuery.of(context).size.height}");
+
     return Scaffold(
       bottomNavigationBar: Responsive.isLargeMobile(context) &&
               _currentPage == 0

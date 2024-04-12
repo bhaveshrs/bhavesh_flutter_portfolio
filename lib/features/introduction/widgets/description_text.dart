@@ -81,7 +81,6 @@ class _AnimatedDescriptionTextState extends State<AnimatedDescriptionText> {
         t += ' ';
       }
     }
-    print(t);
   }
 
   @override
