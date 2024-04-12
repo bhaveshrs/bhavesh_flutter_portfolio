@@ -24,25 +24,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _slideController;
   late Animation<Offset> _slideAnimation;
   // final PageController controller = PageController();
-  final PageController _pageController = PageController();
+  // final PageController _pageController = PageController();
+  final ScrollController _scrollController = ScrollController();
+  double _scrollOffset = 0.0;
+
   double? _appBarHeight;
   List<Widget> pages = [
-    const Introduction(),
-    const ProjectsView(),
     // Certifications(),
   ];
-  int? _currentPage = 0;
+  final int _currentPage = 0;
   // final List<Widget> pages;
+  void _scrollListener() {
+    setState(() {
+      _scrollOffset = _scrollController.offset;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_scrollListener);
 
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page?.toInt();
-      });
-    });
+    // _pageController.addListener(() {
+    //   setState(() {
+    //     _currentPage = _pageController.page?.toInt();
+    //   });
+    // });
     _webAppBarController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -73,6 +80,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 // _pageController.animateTo()
   }
 
+  void scrollToPosition(double position) {
+    _scrollController.animateTo(
+      position,
+      duration: const Duration(milliseconds: 800),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -82,12 +97,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
+    print("_scrollOffset--->>>$_scrollOffset");
+    print("height--->>>${MediaQuery.of(context).size.height}");
     return Scaffold(
       bottomNavigationBar: Responsive.isLargeMobile(context) &&
               _currentPage == 0
           ? Row(
               children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 30,
+                    width: 25,
+                    child: SocialMediaIcon(
+                      icon: 'assets/whatsapp.svg',
+                      onTap: () async {
+                        final Uri whatsappMobile =
+                            Uri.parse("whatsapp://send?phone=+917069184266");
+                        if (await canLaunchUrl(whatsappMobile)) {
+                          await launchUrl(whatsappMobile,
+                              mode: LaunchMode.externalApplication);
+                        } else {
+                          await launchUrl(
+                              Uri.parse(
+                                  "https://web.whatsapp.com/send?phone=917069184266"),
+                              mode: LaunchMode.externalApplication);
+                        }
+                      },
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: SocialMediaIcon(
                       icon: 'assets/linkedin.svg',
@@ -102,10 +140,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         launchUrl(Uri.parse('https://github.com/bhaveshrs')),
                   ),
                 ),
-                const Expanded(
-                    child: SocialMediaIcon(icon: 'assets/twitter.svg')),
-                const Expanded(
-                    child: SocialMediaIcon(icon: 'assets/linkedin.svg')),
+                Expanded(
+                    child: SocialMediaIcon(
+                  icon: 'assets/twitter.svg',
+                  onTap: () {
+                    launchUrl(Uri.parse('https://twitter.com/Bhavesh_131'));
+                  },
+                )),
               ],
             )
           : null,
@@ -125,11 +166,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     }
                   });
                   if (item != -1) {
-                    _pageController.animateToPage(
-                      item,
-                      curve: Curves.easeIn,
-                      duration: const Duration(milliseconds: 800),
-                    );
+                    scrollToPosition(item.toDouble());
                   }
                 },
               )
@@ -137,11 +174,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 webAppBarSlideAnimation: _slideAnimation,
                 webAppBarAnimation: __webAppBaranimation,
                 pageCallback: (pageNumber) {
-                  _pageController.animateToPage(
-                    pageNumber,
-                    curve: Curves.easeIn,
-                    duration: const Duration(milliseconds: 800),
-                  );
+                  scrollToPosition(pageNumber.toDouble());
+                  // _pageController.animateToPage(
+                  //   pageNumber,
+
+                  //   curve: Curves.easeInBack,
+                  //   duration: const Duration(milliseconds: 500),
+                  // );
                 },
               ),
       ),
@@ -155,13 +194,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 : const SizedBox(
                     height: 20 / 2,
                   ),
-        
             Expanded(
-              flex: 9,
-              child: PageView(
+              child: ListView(
+                shrinkWrap: true,
+                // scrollBehavior: CupertinoScrollBehavior(),
                 scrollDirection: Axis.vertical,
-                controller: _pageController,
-                children: pages,
+                controller: _scrollController,
+                children: [
+                  const Introduction(),
+                  ProjectsView(
+                    scrollOffset: _scrollOffset,
+                  ),
+                ],
               ),
             )
           ],

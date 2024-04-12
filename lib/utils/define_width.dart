@@ -36,6 +36,7 @@ class Responsive extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final Size size = MediaQuery.of(context).size;
     if (size.width > 1400 && extraLargeScreen != null) {
       return extraLargeScreen!;

@@ -15,6 +15,7 @@ class WebAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Row(
@@ -33,7 +34,14 @@ class WebAppBar extends StatelessWidget {
                       opacity: webAppBarAnimation.value,
                       child: Row(
                         children: [
-                          Image.asset("assets/flutter_logo.png",height: 70,width: 70,),
+                          Image.asset(
+                            "assets/bash2.png",
+                            height: 70,
+                            width: 70,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           SlideTransition(
                             position: webAppBarSlideAnimation,
                             child: const Text(
@@ -50,13 +58,12 @@ class WebAppBar extends StatelessWidget {
                 );
               },
             ),
-
           ),
           Row(
             children: [
               InkWell(
                 onTap: () {
-                  pageCallback(1);
+                  pageCallback(0);
                 },
                 child: _appBarItem(
                   '1',
@@ -69,7 +76,7 @@ class WebAppBar extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  pageCallback(2);
+                  pageCallback(height.toInt());
                 },
                 child: _appBarItem(
                   '2',
@@ -80,19 +87,19 @@ class WebAppBar extends StatelessWidget {
               const SizedBox(
                 width: 32,
               ),
-              InkWell(
-                onTap: () {
-                  pageCallback(3);
-                },
-                child: _appBarItem(
-                  '3',
-                  'Work',
-                  Icons.handyman_outlined,
-                ),
-              ),
-              const SizedBox(
-                width: 32,
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     pageCallback(3);
+              //   },
+              //   child: _appBarItem(
+              //     '3',
+              //     'Work',
+              //     Icons.handyman_outlined,
+              //   ),
+              // ),
+              // const SizedBox(
+              //   width: 32,
+              // ),
             ],
           ),
         ],

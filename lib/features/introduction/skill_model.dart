@@ -13,17 +13,17 @@ class SkillItems {
 class ProgressData {
   static List<Map<String, dynamic>> progressData = [
     {
-      'percentage': 0.7,
+      'percentage': 0.8,
       'title': 'Flutter',
       'image': 'assets/flutter.png',
     },
     {
-      'percentage': 0.9,
+      'percentage': 0.8,
       'title': 'Dart',
       'image': 'assets/dart.png',
     },
     {
-      'percentage': 0.6,
+      'percentage': 0.7,
       'title': 'Firebase',
       'image': 'assets/firebase.png',
     },
@@ -43,16 +43,27 @@ class ProgressData {
       'image': 'assets/flutter.png',
     },
     {
-      'percentage': 0.5,
+      'percentage': 0.7,
       'title': 'Bloc',
       'image': 'assets/bloc.png',
     },
     {
-      'percentage': 0.93,
+      'percentage': 0.75,
       'title': 'Getx',
       'image': 'assets/dart.png',
     },
+    {
+      'percentage': 0.9,
+      'title': 'Provider',
+      'image': 'assets/dart.png',
+    },
+     {
+      'percentage': 0.40,
+      'title': 'TensorFlow',
+      'image': 'assets/Tensorflow.png',
+    },
   ];
+  // assets/Tensorflow.png
 
   static List<SkillItems> getSkillItems() {
     return progressData.map((item) {

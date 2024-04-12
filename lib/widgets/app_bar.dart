@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MobileAppBar extends StatefulWidget {
-  final Function(bool, int) appBarClick;
+  final Function(bool, double) appBarClick;
 
   const MobileAppBar({
     super.key,
@@ -25,28 +25,34 @@ class _MobileAppBarState extends State<MobileAppBar> {
 
   @override
   Widget build(BuildContext context) {
+      var height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
         Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              Image.asset("assets/flutter_logo.png",height: 70,width: 70,),
-                        
+            Image.asset(
+              "assets/bash2.png",
+              height: 70,
+              width: 70,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
             InkWell(
               onTap: () => widget.appBarClick(_toggle, 0),
-              child:  const Text(
-                            'Bhavesh',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
-                            ),
-                          ),
+              child: const Text(
+                'Bhavesh',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
+              ),
             ),
-            Spacer(),
+            const Spacer(),
             InkWell(
               onTap: () {
                 setState(() {
@@ -84,19 +90,15 @@ class _MobileAppBarState extends State<MobileAppBar> {
                   children: [
                     _appBarItem(
                       'About',
-                      1,
+                      0,
                       Icons.info_outline,
                     ),
                     _appBarItem(
                       'Experience',
-                      2,
+                      height,
                       Icons.work_outline,
                     ),
-                    _appBarItem(
-                      'Work',
-                      3,
-                      Icons.handyman_outlined,
-                    ),
+                   
                   ],
                 ),
               )
@@ -105,7 +107,7 @@ class _MobileAppBarState extends State<MobileAppBar> {
     );
   }
 
-  Widget _appBarItem(String title, int item, IconData icon) {
+  Widget _appBarItem(String title, double item, IconData icon) {
     return InkWell(
       onTap: () {
         setState(() {

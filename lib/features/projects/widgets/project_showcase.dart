@@ -1,9 +1,12 @@
+import 'package:bhavesh_flutter_portfolio/utils/app_colors.dart';
 import 'package:bhavesh_flutter_portfolio/utils/define_width.dart';
 import 'package:flutter/material.dart';
 
 class ProjectShowcase extends StatefulWidget {
   final String title;
   final String? subTitle;
+  final String? index;
+  final String? techStack;
   final String? githubUrl;
   final String? playStoreUrl;
 
@@ -13,6 +16,8 @@ class ProjectShowcase extends StatefulWidget {
     this.subTitle,
     this.githubUrl,
     this.playStoreUrl,
+    this.techStack,
+    this.index,
   });
 
   @override
@@ -91,100 +96,150 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              Text(widget.title.toUpperCase(),
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      height: 0,
-                      fontSize: 24)),
-              SizedBox(
-                width:
-                    (widget.playStoreUrl != null && widget.playStoreUrl != "")
-                        ? 16
-                        : 0,
-              ),
-              (widget.playStoreUrl != null && widget.playStoreUrl != "")
-                  ? InkWell(
-                      onTap: () {
-                        // CommonFunction.openFromUrl(widget.playStoreUrl ?? "");
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            Colors.pinkAccent,
-                            Colors.blue,
-                          ]),
-                        ),
-                        // elevation: 5,
-                        child: Image.asset(
-                          'asset/google_play.png',
-                          fit: BoxFit.fill,
-                          width: 130,
-                          height: 36,
-                        ),
-                      ),
-                    )
-                  : Container(),
-              widget.githubUrl != null && widget.githubUrl != ""
-                  ? Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: InkWell(
+    return SizedBox(
+      height: 550,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              children: [
+                Text("${widget.index}. " ?? "",
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        height: 0,
+                        fontSize: 24)),
+                Text(widget.title.toUpperCase(),
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        height: 0,
+                        fontSize: 24)),
+                SizedBox(
+                  width:
+                      (widget.playStoreUrl != null && widget.playStoreUrl != "")
+                          ? 16
+                          : 0,
+                ),
+                (widget.playStoreUrl != null && widget.playStoreUrl != "")
+                    ? InkWell(
                         onTap: () {
-                          // CommonFunction.openFromUrl(widget.githubUrl ?? "");
+                          // CommonFunction.openFromUrl(widget.playStoreUrl ?? "");
                         },
-                        onHover: (value) {
-                          if (value) {
-                            setState(() {
-                              _playStore = 'github_light';
-                            });
-                          } else {
-                            setState(() {
-                              _playStore = 'github_dark';
-                            });
-                          }
-                        },
-                        child: Image.asset(
-                          'asset/$_playStore.png',
-                          width: 16,
-                          height: 16,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Colors.pinkAccent,
+                              Colors.blue,
+                            ]),
+                          ),
+                          // elevation: 5,
+                          child: Image.asset(
+                            'asset/google_play.png',
+                            fit: BoxFit.fill,
+                            width: 130,
+                            height: 36,
+                          ),
                         ),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          Text(
-            widget.subTitle ?? "",
-            style: TextStyle(
-              fontSize: Responsive.isDesktop(context) ? 18 : 16,
-              fontWeight: FontWeight.w400,
+                      )
+                    : Container(),
+                widget.githubUrl != null && widget.githubUrl != ""
+                    ? Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: InkWell(
+                          onTap: () {
+                            // CommonFunction.openFromUrl(widget.githubUrl ?? "");
+                          },
+                          onHover: (value) {
+                            if (value) {
+                              setState(() {
+                                _playStore = 'github_light';
+                              });
+                            } else {
+                              setState(() {
+                                _playStore = 'github_dark';
+                              });
+                            }
+                          },
+                          child: Image.asset(
+                            'asset/$_playStore.png',
+                            width: 16,
+                            height: 16,
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: SizedBox(
-              height: 300,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: _showcaseList,
+            const SizedBox(
+              height: 10,
+            ),
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(
+                        fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.iconTextColor),
+                    children: [
+                  TextSpan(
+                    text: 'Used techStack : ',
+                    style: TextStyle(
+                        fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: widget.techStack ?? "",
+                    style: TextStyle(
+                      fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ])),
+            const SizedBox(
+              height: 6,
+            ),
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(
+                        fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.iconTextColor),
+                    children: [
+                  TextSpan(
+                    text: 'Quick description : ',
+                    style: TextStyle(
+                        fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: widget.subTitle ?? "",
+                    style: TextStyle(
+                      fontSize: Responsive.isDesktop(context) ? 18 : 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ])),
+            const SizedBox(
+              height: 7,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: SizedBox(
+                height: 320,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  children: _showcaseList,
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -192,7 +247,11 @@ class _ProjectShowcaseState extends State<ProjectShowcase> {
   Widget _placeholder(String image, String folder) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: widget.title == 'Sorted - pos' ? 16 : ['Watthub', 'EVI'].contains(widget.title) ? 0 : 20,
+        horizontal: widget.title == 'Sorted - pos'
+            ? 16
+            : ['Watthub', 'EVI'].contains(widget.title)
+                ? 0
+                : 20,
       ),
       child: Image.asset(
         'assets/$folder/$image.png',

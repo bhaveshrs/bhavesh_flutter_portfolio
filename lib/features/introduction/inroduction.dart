@@ -52,14 +52,12 @@ class _IntroductionState extends State<Introduction>
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
 
-    return Scaffold(
-      body: Row(
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Row(
         children: [
           SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.01,
-          ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.02,
+            width: size.width * 0.03,
           ),
           if (!Responsive.isLargeMobile(context))
             TweenAnimationBuilder(
@@ -82,6 +80,10 @@ class _IntroductionState extends State<Introduction>
                                   ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+
                       Container(
                         height: size.height * 0.06,
                         width: 3,
@@ -90,41 +92,81 @@ class _IntroductionState extends State<Introduction>
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
                       ),
+                      SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: SocialMediaIcon(
+                          icon: 'assets/whatsapp.svg',
+                          onTap: () async {
+                            final Uri whatsappMobile = Uri.parse(
+                                "whatsapp://send?phone=+917069184266");
+                            if (await canLaunchUrl(whatsappMobile)) {
+                              await launchUrl(whatsappMobile,
+                                  mode: LaunchMode.externalApplication);
+                            } else {
+                              await launchUrl(
+                                  Uri.parse(
+                                      "https://web.whatsapp.com/send?phone=917069184266"),
+                                  mode: LaunchMode.externalApplication);
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+
                       SocialMediaIcon(
                           icon: 'assets/linkedin.svg',
                           onTap: () => launchUrl(Uri.parse(
                               'https://www.linkedin.com/in/bhavesh-rana-881b27212/'))),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       SocialMediaIcon(
                         icon: 'assets/github.svg',
                         onTap: () => launchUrl(
                             Uri.parse('https://github.com/bhaveshrs')),
                       ),
-                      const SocialMediaIcon(
-                        icon: 'assets/dribble.svg',
+                      const SizedBox(
+                        height: 5,
                       ),
-                      const SocialMediaIcon(icon: 'assets/twitter.svg'),
-                      const SocialMediaIcon(icon: 'assets/linkedin.svg'),
+
+                      SocialMediaIcon(
+                        icon: 'assets/twitter.svg',
+                        onTap: () {
+                          launchUrl(
+                              Uri.parse('https://twitter.com/Bhavesh_131'));
+                          // https://twitter.com/Bhavesh_131
+                        },
+                      ),
+
+                      //              final Uri whatsappMobile = Uri.parse("whatsapp://send?phone=$whatsapp");
+                      // if (await canLaunchUrl(whatsappMobile)) {
+                      //   await launchUrl(whatsappMobile, mode: LaunchMode.externalApplication);
+                      // } else {
+                      //   await launchUrl( Uri.parse("https://web.whatsapp.com/send?phone=$whatsapp"), mode: LaunchMode.externalApplication);
+                      // }
+
                       const Spacer(),
                     ],
                   ),
                 );
               },
             ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.07,
-          ),
+          if (Responsive.isDesktop(context))
+            SizedBox(
+              width: size.width * 0.07,
+            ),
           Expanded(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      if (!Responsive.isDesktop(context))
-                        SizedBox(
-                          height: size.height * 0.06,
-                        ),
                       if (!Responsive.isDesktop(context))
                         Center(
                           child: AnimatedBuilder(
@@ -175,8 +217,13 @@ class _IntroductionState extends State<Introduction>
                                         .FRONT, // The side to initially display.
                                     front: AnimatedImageContainer(
                                       skillItems: listData[frontCurrentIndex],
-                                      width: 150,
-                                      height: 200,
+                                      width: size.width * 0.4,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                                      0.5 >
+                                                  300
+                                              ? 300
+                                              : size.width * 0.5,
                                     ),
                                     back: AnimatedImageContainer(
                                       skillItems: listData[backCurrentIndex],
@@ -203,13 +250,18 @@ class _IntroductionState extends State<Introduction>
                           desktop: MyPortfolioText(start: 40, end: 50),
                           largeMobile: MyPortfolioText(start: 40, end: 35),
                           mobile: MyPortfolioText(start: 35, end: 30),
-                          tablet: MyPortfolioText(start: 50, end: 40)),
+                          tablet: Row(
+                            children: [
+                              MyPortfolioText(start: 50, end: 40),
+                            ],
+                          )),
                       if (kIsWeb && Responsive.isLargeMobile(context))
                         Container(
                           height: 20,
                           color: Colors.transparent,
                         ),
-                      const CombineSubtitleText(firstText: "Flutter " ,secondText: "Developer"),
+                      const CombineSubtitleText(
+                          firstText: "Flutter ", secondText: "Developer"),
                       const SizedBox(height: 10),
                       const Responsive(
                         desktop: AnimatedDescriptionText(start: 14, end: 15),
@@ -225,8 +277,8 @@ class _IntroductionState extends State<Introduction>
                     ],
                   ),
                 ),
-                const Spacer(),
-                if (Responsive.isDesktop(context))
+                if (Responsive.isDesktop(context)) ...[
+                  const Spacer(),
                   AnimatedBuilder(
                       animation: _controller,
                       builder: (context, child) {
@@ -279,7 +331,8 @@ class _IntroductionState extends State<Introduction>
                           ),
                         );
                       }),
-                const Spacer()
+                  const Spacer()
+                ]
               ],
             ),
           ),

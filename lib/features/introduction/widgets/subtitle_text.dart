@@ -40,16 +40,24 @@ class CombineSubtitleText extends StatelessWidget {
           ),
         ),
         (kIsWeb && Responsive.isLargeMobile(context)
-            ? Responsive(
-                desktop: AnimatedSubtitleText(
-                    start: 30, end: 40, text: secondText ?? "", gradient: true),
-                largeMobile: AnimatedSubtitleText(
-                    start: 30, end: 25, text: secondText ?? "", gradient: true),
-                mobile: AnimatedSubtitleText(
-                    start: 25, end: 20, text: secondText ?? "", gradient: true),
-                tablet: AnimatedSubtitleText(
-                    start: 40, end: 30, text: secondText ?? "", gradient: true),
-              )
+            ? ShaderMask(
+              shaderCallback: (bounds) {
+                  return const LinearGradient(colors: [
+                    AppColors.darkPrimaryColor,
+                    Colors.blue,
+                  ]).createShader(bounds);
+                },
+              child: Responsive(
+                  desktop: AnimatedSubtitleText(
+                      start: 30, end: 40, text: secondText ?? "", gradient: true),
+                  largeMobile: AnimatedSubtitleText(
+                      start: 30, end: 25, text: secondText ?? "", gradient: true),
+                  mobile: AnimatedSubtitleText(
+                      start: 25, end: 20, text: secondText ?? "", gradient: true),
+                  tablet: AnimatedSubtitleText(
+                      start: 40, end: 30, text: secondText ?? "", gradient: true),
+                ),
+            )
             : ShaderMask(
                 shaderCallback: (bounds) {
                   return const LinearGradient(colors: [
@@ -62,12 +70,12 @@ class CombineSubtitleText extends StatelessWidget {
                       start: 30,
                       end: 40,
                       text: secondText ?? "",
-                      gradient: false),
+                      gradient: true),
                   largeMobile: AnimatedSubtitleText(
                       start: 30,
                       end: 25,
                       text: secondText ?? "",
-                      gradient: false),
+                      gradient: true),
                   mobile: AnimatedSubtitleText(
                       start: 25,
                       end: 20,
@@ -77,7 +85,7 @@ class CombineSubtitleText extends StatelessWidget {
                       start: 40,
                       end: 30,
                       text: secondText ?? "",
-                      gradient: false),
+                      gradient: true),
                 ),
               ))
       ],
